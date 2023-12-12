@@ -1,16 +1,17 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Studio Gardini - Timesheet</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="mystyle.css">
-  </head>
-  <body>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-  </body>
-</html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Studio Gardini - Timesheet</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+   <link rel="stylesheet" href="mystyle.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+<body>
 
 <div class="container-fluid">
     <script src="navBar.js"></script>
@@ -23,15 +24,15 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-lg-8 col-md-4 col-sm-12">
-
+        <div class="col-lg-8 col-md-6 col-sm-12 pb-4">
+            <label for="dateSelector">Seleziona la data:</label>
+            <input type="text" id="dateSelector" onchange="limitDateSelection()" placeholder="Seleziona la data di inizio">
         </div>
-        <div class="col-lg-4 col-md-4 col-sm-12 pb-4">
+        <div class="col-lg-4 col-md-6 col-sm-12 pb-4">
             <button type="button" class="btn btn-primary" id="addButton">+ Aggiungi riga</button>
         </div>
     </div>
 </div>
-
 
 <div class="container-fluid">
     <div class="row">
@@ -39,14 +40,14 @@
             <table id="timesheet" class="table table-striped">
                 <thead>
                     <tr id="mainHeader">
-                        <th rowspan="2">Attività</th>
+                        <!-- <th rowspan="2">Attività</th> -->
                         <!-- Aggiungi più colonne per ogni giorno del mese -->
                     </tr>
                     <tr id="daysOfWeekRow"></tr>
                 </thead>
                 <tbody>
                     <tr id="exampleRow">
-                        <td><input type="text" value="Project A"></td>
+                        <!-- <td><input type="text" value="Project A"></td> -->
                         <!-- Aggiungi più colonne per ogni giorno del mese -->
                     </tr>
                     <!-- Aggiungi più righe secondo necessità -->
@@ -56,62 +57,77 @@
     </div>
 </div>
 
+
+
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const timesheetTable = document.getElementById("timesheet");
-        const daysInMonth = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate();
-        const date = new Date();
-        const day = date.getDate();
-        const month = date.getMonth() + 1;
-        const year = date.getFullYear();
+  $(function () {
+    // Inizializza il dateSelector
+    $("#dateSelector").datepicker({
+        beforeShowDay: function (date) {
+        // Disabilita tutti i giorni tranne il 1° e il 15° del mese
+        return [date.getDate() === 1 || date.getDate() === 16, ""];
+        },
+        onSelect: function (dateText, inst) {
+            // Ottieni la data selezionata
+            const selectedDate = new Date(dateText);
 
-        // Aggiungi colonne per ogni giorno del mese
-        for (let i = 1; i <= daysInMonth; i++) {
-            const th = document.createElement("th");
-            th.textContent = `${i}/${month}`;
-            th.classList.add("text-center");
-            timesheetTable.querySelector("#daysOfWeekRow").appendChild(th);
-
-            const td = document.createElement("td");
-            td.innerHTML = `<input type="text" class="form-control" value="">`;
-            timesheetTable.querySelector("tbody tr").appendChild(td);
-        }
-
-        const th_day = document.createElement("th");
-        th_day.textContent = `Giorno`;
-        th_day.setAttribute("colspan", daysInMonth + 1);
-        th_day.classList.add("text-center");
-        timesheetTable.querySelector("#mainHeader").appendChild(th_day);
-
-        // Dichiarazioni mancanti, sostituisci con il tuo codice effettivo
-        const addButton = document.getElementById("addButton");
-        const rigaEsempio = document.getElementById("exampleRow");
-        const tbody = timesheetTable.querySelector("tbody");
-
-        // Assicurati di avere il riferimento a addButton, rigaEsempio e tbody
-
-        // Aggiungi evento click al bottone
-        addButton.addEventListener("click", function() {
-            // Clona la riga di esempio
-            const nuovaRiga = rigaEsempio.cloneNode(true);
-
-            // Modifica l'id della nuova riga per evitare duplicati
-            const nuovaId = `riga_${new Date().getTime()}`;
-            nuovaRiga.setAttribute("id", nuovaId);
-
-            // Resetta i valori degli input nella nuova riga
-            const inputElements = nuovaRiga.querySelectorAll('input[type="text"]');
-            inputElements.forEach(function(input) {
-                input.value = '';
-            });
-
-            // Aggiungi la nuova riga alla tabella
-            tbody.appendChild(nuovaRiga);
-        });
+            // Costruisci la tabella con i prossimi 14 giorni
+            buildTable(selectedDate);
+      }
     });
 
+    function buildTable(startDate) {
+        const daysInMonth = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0).getDate();
+        const daysOfWeekRow = $("#daysOfWeekRow");
+        const timesheetTable = $("#timesheet tbody tr");
 
+        // Svuota la tabella
+        daysOfWeekRow.empty();
+        timesheetTable.empty();
+        
+        // Aggiungi la colonna delle attività
+        $("<th>").text("Attività").attr("rowspan", 2).addClass("text-center").appendTo(mainHeader);
+        $("<td>").html(`<input type="text" class="form-control" value="Progetto A">`).appendTo(timesheetTable);
 
+        for (let i = 0; i < 16; i++) {
+            const currentDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + i);
+            const dayOfMonth = currentDate.getDate();
+
+            // Aggiungi la colonna al giorno della settimana
+            $("<th>").text(`${dayOfMonth}/${currentDate.getMonth() + 1}`).addClass("text-center").appendTo(daysOfWeekRow);
+
+            // Aggiungi la colonna al corpo della tabella
+            $("<td>").html(`<input type="text" class="form-control" value="">`).appendTo(timesheetTable);
+      }
+      // Aggiungi l'intestazione principale
+      $("<th>").text("Giorno").attr("colspan", 16).addClass("text-center").appendTo(mainHeader);
+    }
+  });
+
+    // Assicurati di avere il riferimento a addButton, rigaEsempio e tbody
+    const addButton = document.getElementById("addButton");
+    const rigaEsempio = document.getElementById("daysOfWeekRow");
+    const tbody = timesheetTable.querySelector("tbody");
+    
+    // Aggiungi evento click al bottone
+    addButton.addEventListener("click", function() {
+        // Clona la riga di esempio
+        const nuovaRiga = rigaEsempio.cloneNode(true);
+
+        // Modifica l'id della nuova riga per evitare duplicati
+        const nuovaId = `riga_${new Date().getTime()}`;
+        nuovaRiga.setAttribute("id", nuovaId);
+
+        // Resetta i valori degli input nella nuova riga
+        const inputElements = nuovaRiga.querySelectorAll('input[type="text"]');
+        inputElements.forEach(function(input) {
+            input.value = '';
+        });
+
+        // Aggiungi la nuova riga alla tabella
+        tbody.appendChild(nuovaRiga);
+    });
 </script>
 
+</body>
 </html>

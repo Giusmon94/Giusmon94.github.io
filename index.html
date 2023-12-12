@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Studio Gardini - Collaboratori</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  </head>
+  <body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <!-- Includi Bootstrap JavaScript (richiesto per il funzionamento del toggler su dispositivi mobili) -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>
+
+
+<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+<link rel="stylesheet" href="mystyle.css">
+<div id="login" class="container-fluid">
+  <div class="col-12">
+    <div class="row-fluid">
+      <div class="login well well-small">
+        <!-- <div class="center">
+          <img src="http://placehold.it/250x100&text=Logo" alt="logo"> 
+        </div> -->
+        <form action="#" class="login-form" id="UserLoginForm" accept-charset="utf-8">
+          <div class="control-group text-center">
+            <div class="form-control-lg input-prepend">
+              <div class="form-control-lg add-on"><i class="icon-user"></i></div>
+              <input class="form-control form-control-lg" sname="data[User][username]" required="required" placeholder="Username" maxlength="255" type="text" id="UserUsername"> 
+            </div>
+          </div>
+          <div class="control-group text-center">
+            <div class="form-control-lg input-prepend">
+              <div class="form-control-lg add-on"><i class="icon-lock"></i></div>
+              <input class="form-control form-control-lg" name="data[User][password]" required="required" placeholder="Password" type="password" id="UserPassword"> 
+            </div>
+          </div>
+          <div class="control-group text-center">
+            <label id="remember-me">
+              <input type="checkbox" name="data[User][remember_me]" value="1" id="UserRememberMe"> Ricordami?</label>
+          </div>
+          <div class="control-group text-center">
+            <input class="btn btn-primary btn-large" type="submit" value="Log in"> 
+          </div>
+        </form>
+      </div><!--/.login-->
+    </div><!--/.row-fluid-->
+  </div><!--/.col-12-->
+</div><!--/.container-->
+
+<script src="script/login.js"></script>
+

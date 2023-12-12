@@ -1,0 +1,3 @@
+cd /d D:\Giuseppe Andrea\Lavoro\Pagina_web_v1
+
+http-server   # run del server per visualizzare la pagina web
